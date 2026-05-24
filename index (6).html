@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="Free AI Resume Maker for Pakistani Students and Fresh Graduates. Create a professional resume in minutes. No sign up needed."/>
+<meta name="keywords" content="free resume maker pakistan, AI resume maker pakistan, resume for fresh graduates pakistan, CV maker pakistan, student resume pakistan"/>
+<meta property="og:title" content="ResumeAI Pakistan – Free AI Resume Maker"/>
+<meta property="og:description" content="Create a professional resume in minutes using AI. Made for Pakistani students and fresh graduates."/>
+<meta name="google-site-verification" content="EqgyatPfN5VUOurXgimqyvX32I8wynecyheqERRyb9M" />
+<title>ResumeAI Pakistan – Free AI Resume Maker for Students</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#1a7a4a;
+  --green-light:#e8f5ee;
+  --green-mid:#2ecc71;
+  --gold:#c9a84c;
+  --dark:#111;
+  --gray:#666;
+  --border:#ddd;
+  --bg:#fafaf8;
+  --white:#fff;
+  --radius:12px;
+  --shadow:0 2px 16px rgba(0,0,0,0.08);
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);min-height:100vh;max-width:520px;margin:0 auto}
+
+/* HEADER */
+.header{background:var(--green);padding:1.5rem 1.25rem 2rem;text-align:center;position:relative;overflow:hidden}
+.header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:24px;background:var(--bg);border-radius:24px 24px 0 0}
+.logo{font-family:'Playfair Display',serif;font-size:1.8rem;color:#fff;letter-spacing:-0.5px}
+.logo span{color:#90ee90}
+.tagline{font-size:0.78rem;color:rgba(255,255,255,0.75);margin-top:4px;letter-spacing:0.5px;text-transform:uppercase}
+.flag{font-size:1.2rem;margin-top:6px}
+
+/* STEPS */
+.steps{display:flex;gap:0;background:var(--white);border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none}
+.steps::-webkit-scrollbar{display:none}
+.step-btn{flex:1;min-width:80px;padding:0.75rem 0.5rem;border:none;background:none;font-family:'DM Sans',sans-serif;font-size:0.72rem;color:var(--gray);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;white-space:nowrap}
+.step-btn.active{color:var(--green);border-bottom-color:var(--green);font-weight:600}
+.step-btn.done{color:var(--green-mid)}
+
+/* FORM SECTIONS */
+.form-section{display:none;padding:1.25rem}
+.form-section.active{display:block}
+.section-title{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--green);margin-bottom:1rem}
+.field{margin-bottom:1rem}
+.field label{display:block;font-size:0.78rem;font-weight:600;color:var(--gray);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px}
+.field input,.field textarea,.field select{width:100%;padding:0.65rem 0.85rem;border:1.5px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.9rem;background:var(--white);color:var(--dark);transition:border 0.2s;outline:none}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--green)}
+.field textarea{resize:vertical;min-height:90px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hint{font-size:0.72rem;color:var(--gray);margin-top:4px;font-style:italic}
+
+/* SKILLS */
+.skills-input{display:flex;gap:8px}
+.skills-input input{flex:1}
+.add-btn{padding:0.65rem 1rem;background:var(--green);color:#fff;border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.85rem;cursor:pointer;white-space:nowrap}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.tag{background:var(--green-light);color:var(--green);padding:4px 10px;border-radius:20px;font-size:0.78rem;display:flex;align-items:center;gap:6px;cursor:pointer}
+.tag .remove{font-size:0.9rem;opacity:0.6}
+
+/* NAV BUTTONS */
+.nav{display:flex;gap:10px;padding:1rem 1.25rem;border-top:1px solid var(--border);background:var(--white);position:sticky;bottom:0}
+.btn-back{flex:1;padding:0.75rem;border:1.5px solid var(--border);border-radius:8px;background:none;font-family:'DM Sans',sans-serif;font-size:0.9rem;cursor:pointer;color:var(--gray)}
+.btn-next{flex:2;padding:0.75rem;border:none;border-radius:8px;background:var(--green);color:#fff;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer}
+.btn-generate{flex:2;padding:0.75rem;border:none;border-radius:8px;background:var(--green);color:#fff;font-family:'DM Sans',sans-serif;font-size:0.95rem;font-weight:600;cursor:pointer}
+
+/* RESULT */
+.result-section{display:none;padding:1.25rem}
+.result-section.active{display:block}
+.ai-badge{display:inline-flex;align-items:center;gap:6px;background:var(--green-light);color:var(--green);padding:4px 12px;border-radius:20px;font-size:0.75rem;font-weight:600;margin-bottom:1rem}
+.resume-box{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;font-size:0.85rem;line-height:1.7;white-space:pre-wrap;min-height:200px;color:var(--dark);box-shadow:var(--shadow)}
+.loading-box{display:flex;align-items:center;justify-content:center;min-height:200px;color:var(--gray);font-style:italic}
+.spinner{width:24px;height:24px;border:3px solid var(--green-light);border-top-color:var(--green);border-radius:50%;animation:spin 0.8s linear infinite;margin-right:10px;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+.action-row{display:flex;gap:8px;margin-top:1rem}
+.btn-copy,.btn-restart{flex:1;padding:0.7rem;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer}
+.btn-copy{background:var(--green);color:#fff;border:none}
+.btn-restart{background:none;border:1.5px solid var(--border);color:var(--gray)}
+.watermark{text-align:center;font-size:0.72rem;color:var(--gray);margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--border)}
+.watermark a{color:var(--green);text-decoration:none;font-weight:600}
+
+/* PROGRESS BAR */
+.progress-bar{height:3px;background:var(--green-light)}
+.progress-fill{height:100%;background:var(--green);transition:width 0.3s}
+
+/* TIPS */
+.tip{background:var(--green-light);border-left:3px solid var(--green);padding:0.75rem 1rem;border-radius:0 8px 8px 0;font-size:0.8rem;color:#1a5c38;margin-bottom:1rem;line-height:1.5}
+
+/* FOOTER */
+.footer{text-align:center;padding:1.5rem;font-size:0.75rem;color:var(--gray);border-top:1px solid var(--border);margin-top:1rem}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">Resume<span>AI</span> Pakistan</div>
+  <div class="tagline">Free AI Resume Maker for Students &amp; Fresh Grads</div>
+  <div class="flag">🇵🇰</div>
+</div>
+
+<div class="progress-bar"><div class="progress-fill" id="progress" style="width:20%"></div></div>
+
+<div class="steps">
+  <button class="step-btn active" id="tab0">Personal</button>
+  <button class="step-btn" id="tab1">Education</button>
+  <button class="step-btn" id="tab2">Experience</button>
+  <button class="step-btn" id="tab3">Skills</button>
+  <button class="step-btn" id="tab4">Generate</button>
+</div>
+
+<!-- STEP 0: PERSONAL -->
+<div class="form-section active" id="section0">
+  <div class="section-title">Personal Info</div>
+  <div class="tip">💡 Pakistani recruiters prefer a professional email like yourname@gmail.com</div>
+  <div class="field"><label>Full Name *</label><input id="name" placeholder="e.g. Muhammad Ahmed Khan" /></div>
+  <div class="row">
+    <div class="field"><label>Phone *</label><input id="phone" placeholder="+92 300 1234567" /></div>
+    <div class="field"><label>City *</label><input id="city" placeholder="Karachi, Lahore..." /></div>
+  </div>
+  <div class="field"><label>Email *</label><input id="email" type="email" placeholder="yourname@gmail.com" /></div>
+  <div class="field"><label>LinkedIn (optional)</label><input id="linkedin" placeholder="linkedin.com/in/yourname" /></div>
+  <div class="field"><label>Job Title You're Applying For *</label><input id="jobtitle" placeholder="e.g. Software Engineer, Marketing Executive" /></div>
+</div>
+
+<!-- STEP 1: EDUCATION -->
+<div class="form-section" id="section1">
+  <div class="section-title">Education</div>
+  <div class="tip">💡 Always mention your CGPA if 3.0+ or percentage if 70%+. Pakistani employers check this!</div>
+  <div class="field"><label>University / College *</label><input id="university" placeholder="e.g. NUST, LUMS, IBA, UET, FAST, NED..." /></div>
+  <div class="field"><label>Degree *</label><input id="degree" placeholder="e.g. BS Computer Science" /></div>
+  <div class="row">
+    <div class="field"><label>Graduation Year *</label><input id="gradyear" placeholder="2024" /></div>
+    <div class="field"><label>CGPA / Grade</label><input id="cgpa" placeholder="3.5 / 4.0" /></div>
+  </div>
+  <div class="field"><label>Relevant Courses (optional)</label><input id="courses" placeholder="Data Structures, Digital Marketing, Finance..." /></div>
+  <div class="field"><label>Intermediate / FSc / A-Levels</label><input id="inter" placeholder="Govt. College Lahore – FSc Pre-Engineering – 2020" /></div>
+</div>
+
+<!-- STEP 2: EXPERIENCE -->
+<div class="form-section" id="section2">
+  <div class="section-title">Experience &amp; Projects</div>
+  <div class="tip">💡 No job yet? No problem! Add internships, university projects, freelance work, or volunteer work.</div>
+  <div class="field"><label>Internship / Job (if any)</label><textarea id="experience" placeholder="e.g. Marketing Intern at XYZ Company (June–Aug 2024)&#10;Managed social media, increased followers by 40%..."></textarea></div>
+  <div class="field"><label>Final Year Project / Notable Project *</label><textarea id="project" placeholder="e.g. Built an e-commerce app using React and Node.js. Allowed 200+ users to buy/sell products online..."></textarea></div>
+  <div class="field"><label>Extracurriculars / Societies (optional)</label><input id="extra" placeholder="e.g. SOFTEC team, Debating Society, IEEE..." /></div>
+  <div class="field"><label>Volunteer Work (optional)</label><input id="volunteer" placeholder="e.g. Taught underprivileged kids at XYZ NGO" /></div>
+</div>
+
+<!-- STEP 3: SKILLS -->
+<div class="form-section" id="section3">
+  <div class="section-title">Skills &amp; Summary</div>
+  <div class="tip">💡 Add both technical AND soft skills. Pakistani employers value communication, teamwork and leadership!</div>
+  <div class="field">
+    <label>Add Your Skills</label>
+    <div class="skills-input">
+      <input id="skillInput" placeholder="e.g. Python, MS Excel, Photoshop..." />
+      <button class="add-btn" onclick="addSkill()">+ Add</button>
+    </div>
+    <div class="tags" id="skillTags"></div>
+    <p class="hint">Tap a skill to remove it</p>
+  </div>
+  <div class="field">
+    <label>Career Objective (optional – AI will write one if empty)</label>
+    <textarea id="summary" placeholder="e.g. Motivated CS graduate from NUST seeking a software engineering role where I can apply my skills..."></textarea>
+  </div>
+  <div class="field">
+    <label>Languages Known</label>
+    <input id="languages" placeholder="Urdu (Native), English (Fluent), Punjabi..." />
+  </div>
+</div>
+
+<!-- STEP 4: GENERATE -->
+<div class="form-section" id="section4">
+  <div class="section-title">Almost There! 🎉</div>
+  <div class="tip">✨ Our AI will create a professional, ATS-friendly resume tailored for the Pakistani job market.</div>
+  <div class="field">
+    <label>Resume Style</label>
+    <select id="style">
+      <option value="professional">Professional (Corporate – Banks, MNCs)</option>
+      <option value="modern">Modern (Tech Companies, Startups)</option>
+      <option value="creative">Creative (Marketing, Design, Media)</option>
+      <option value="academic">Academic (Research, Teaching, PhD)</option>
+    </select>
+  </div>
+  <div class="field">
+    <label>Tone</label>
+    <select id="tone">
+      <option value="confident">Confident &amp; Achievement-focused</option>
+      <option value="humble">Humble &amp; Eager to Learn</option>
+      <option value="technical">Technical &amp; Detail-oriented</option>
+    </select>
+  </div>
+  <p style="font-size:0.82rem;color:var(--gray);line-height:1.6;margin-top:0.5rem">
+    Your resume will be professionally formatted and ready to send to employers across Pakistan. 🇵🇰
+  </p>
+</div>
+
+<!-- RESULT -->
+<div class="result-section" id="resultSection">
+  <div class="ai-badge">✨ AI Generated Resume</div>
+  <div class="resume-box" id="resumeOutput">
+    <div class="loading-box"><div class="spinner"></div>AI is writing your resume...</div>
+  </div>
+  <div class="action-row">
+    <button class="btn-copy" onclick="copyResume()">📋 Copy Resume</button>
+    <button class="btn-restart" onclick="restart()">↩ Start Over</button>
+  </div>
+  <div class="watermark">
+    Made with ❤️ by <a href="#">ResumeAI Pakistan</a><br/>
+    Free for Pakistani Students &amp; Fresh Graduates
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="nav" id="navBar">
+  <button class="btn-back" id="backBtn" onclick="prevStep()" style="display:none">← Back</button>
+  <button class="btn-next" id="nextBtn" onclick="nextStep()">Next →</button>
+</div>
+
+<div class="footer">
+  ResumeAI Pakistan &copy; 2025 &nbsp;|&nbsp; Free. Always.
+</div>
+
+<script>
+let currentStep = 0;
+const totalSteps = 5;
+let skills = [];
+
+function updateUI() {
+  document.querySelectorAll('.form-section').forEach(function(s, i) {
+    s.classList.toggle('active', i === currentStep);
+  });
+  document.querySelectorAll('.step-btn').forEach(function(b, i) {
+    b.classList.toggle('active', i === currentStep);
+    b.classList.toggle('done', i < currentStep);
+  });
+  var pct = ((currentStep + 1) / totalSteps * 100);
+  document.getElementById('progress').style.width = pct + '%';
+  document.getElementById('backBtn').style.display = currentStep > 0 ? 'block' : 'none';
+  var nextBtn = document.getElementById('nextBtn');
+  if (currentStep === 4) {
+    nextBtn.textContent = '✨ Generate My Resume';
+    nextBtn.className = 'btn-generate';
+  } else {
+    nextBtn.textContent = 'Next →';
+    nextBtn.className = 'btn-next';
+  }
+  window.scrollTo(0, 0);
+}
+
+function nextStep() {
+  if (currentStep < 4) {
+    currentStep++;
+    updateUI();
+  } else {
+    generateResume();
+  }
+}
+
+function prevStep() {
+  if (currentStep > 0) {
+    currentStep--;
+    updateUI();
+  }
+}
+
+function addSkill() {
+  var input = document.getElementById('skillInput');
+  var val = input.value.trim();
+  if (val && !skills.includes(val)) {
+    skills.push(val);
+    renderTags();
+  }
+  input.value = '';
+  input.focus();
+}
+
+document.getElementById('skillInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') { e.preventDefault(); addSkill(); }
+});
+
+function renderTags() {
+  var container = document.getElementById('skillTags');
+  container.innerHTML = skills.map(function(s, i) {
+    return '<span class="tag" onclick="removeSkill(' + i + ')">' + s + ' <span class="remove">×</span></span>';
+  }).join('');
+}
+
+function removeSkill(i) {
+  skills.splice(i, 1);
+  renderTags();
+}
+
+async function generateResume() {
+  var data = {
+    name: document.getElementById('name').value || 'Not provided',
+    phone: document.getElementById('phone').value || 'Not provided',
+    city: document.getElementById('city').value || 'Pakistan',
+    email: document.getElementById('email').value || 'Not provided',
+    linkedin: document.getElementById('linkedin').value || '',
+    jobtitle: document.getElementById('jobtitle').value || 'Fresh Graduate',
+    university: document.getElementById('university').value || 'Not provided',
+    degree: document.getElementById('degree').value || 'Not provided',
+    gradyear: document.getElementById('gradyear').value || '2024',
+    cgpa: document.getElementById('cgpa').value || '',
+    courses: document.getElementById('courses').value || '',
+    inter: document.getElementById('inter').value || '',
+    experience: document.getElementById('experience').value || 'No formal experience',
+    project: document.getElementById('project').value || 'University final year project',
+    extra: document.getElementById('extra').value || '',
+    volunteer: document.getElementById('volunteer').value || '',
+    skills: skills.join(', ') || 'MS Office, Communication, Teamwork',
+    summary: document.getElementById('summary').value || '',
+    languages: document.getElementById('languages').value || 'Urdu (Native), English (Fluent)',
+    style: document.getElementById('style').value,
+    tone: document.getElementById('tone').value
+  };
+
+  document.querySelectorAll('.form-section').forEach(function(s) { s.classList.remove('active'); });
+  document.getElementById('navBar').style.display = 'none';
+  document.querySelectorAll('.step-btn').forEach(function(b) { b.classList.remove('active'); });
+  document.getElementById('resultSection').classList.add('active');
+  document.getElementById('resumeOutput').innerHTML = '<div class="loading-box"><div class="spinner"></div>AI is writing your resume...</div>';
+
+  var prompt = 'You are a professional resume writer specializing in the Pakistani job market. Create a complete, ATS-friendly resume for a Pakistani fresh graduate or student.\n\nCANDIDATE INFO:\nName: ' + data.name + '\nPhone: ' + data.phone + '\nCity: ' + data.city + '\nEmail: ' + data.email + '\nLinkedIn: ' + (data.linkedin || 'Not provided') + '\nTarget Job: ' + data.jobtitle + '\n\nEDUCATION:\nUniversity: ' + data.university + '\nDegree: ' + data.degree + '\nGraduation Year: ' + data.gradyear + '\nCGPA/Grade: ' + (data.cgpa || 'Not mentioned') + '\nRelevant Courses: ' + (data.courses || 'None') + '\nIntermediate/FSc: ' + (data.inter || 'Not mentioned') + '\n\nEXPERIENCE:\nInternship/Job: ' + data.experience + '\nProject/FYP: ' + data.project + '\nExtracurriculars: ' + (data.extra || 'None') + '\nVolunteer: ' + (data.volunteer || 'None') + '\n\nSKILLS: ' + data.skills + '\nLANGUAGES: ' + data.languages + '\nCAREER SUMMARY PROVIDED: ' + (data.summary || 'Please generate a strong one') + '\n\nSTYLE: ' + data.style + '\nTONE: ' + data.tone + '\n\nWrite a complete professional resume in plain text. Use clear section headers in CAPITAL LETTERS like:\nCAREER OBJECTIVE\nEDUCATION\nSKILLS\nEXPERIENCE / PROJECTS\nEXTRACURRICULAR ACTIVITIES\nLANGUAGES\n\nUse bullet points with dashes (-). Make bullets achievement-focused with strong action verbs. If no formal experience, emphasize projects and transferable skills. Keep it suitable for 1 page. Target Pakistani employers like HBL, Engro, Unilever Pakistan, Systems Limited, Arbisoft, etc. Do NOT use markdown like ** or ##. Use only plain text with CAPS headers.';
+
+  try {
+    var response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer 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'
+      },
+      body: JSON.stringify({
+        model: 'llama3-8b-8192',
+        messages: [{ role: 'user', content: prompt }],
+        max_tokens: 1500
+      })
+    });
+    var json = await response.json();
+    var text = (json.choices && json.choices[0] && json.choices[0].message) ? json.choices[0].message.content : 'Could not generate resume. Please try again.';
+    document.getElementById('resumeOutput').textContent = text;
+  } catch(e) {
+    document.getElementById('resumeOutput').textContent = 'Something went wrong. Please check your internet and try again.';
+  }
+}
+
+function copyResume() {
+  var text = document.getElementById('resumeOutput').textContent;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(function() {
+      var btn = document.querySelector('.btn-copy');
+      btn.textContent = '✅ Copied!';
+      setTimeout(function() { btn.textContent = '📋 Copy Resume'; }, 2000);
+    });
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    var btn = document.querySelector('.btn-copy');
+    btn.textContent = '✅ Copied!';
+    setTimeout(function() { btn.textContent = '📋 Copy Resume'; }, 2000);
+  }
+}
+
+function restart() {
+  currentStep = 0;
+  skills = [];
+  renderTags();
+  document.getElementById('resultSection').classList.remove('active');
+  document.getElementById('navBar').style.display = 'flex';
+  document.querySelectorAll('input, textarea').forEach(function(el) { el.value = ''; });
+  document.getElementById('style').selectedIndex = 0;
+  document.getElementById('tone').selectedIndex = 0;
+  updateUI();
+}
+
+updateUI();
+</script>
+</body>
+</html>
